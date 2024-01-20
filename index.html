@@ -57,6 +57,7 @@
 			const loader = new GLTFLoader();
 			loader.load('models/scene.glb', function (gltf) {
 				console.log("In loader", gltf.scene);
+				gltf.scene.position.set(0, -0.5, -1.8)
 				scene.add(gltf.scene);
 
 			}, undefined, function (error) {
