@@ -18,7 +18,7 @@
 		import { OrbitControls } from 'https://unpkg.com/three@0.126.0/examples/jsm/controls/OrbitControls.js';
 
 
-		let camera, scene, renderer, controls;
+		let camera, scene, renderer, controls, xrSession, current_obj;
 		let mesh;
 
 		init();
@@ -58,10 +58,12 @@
 			// scene.add(mesh);
 
 			const loader = new GLTFLoader();
-			loader.load('models/MVR_scene_resized.glb', function (gltf) {
+			loader.load('models/MVR_scene.glb', function (gltf) {
 				console.log("In loader", gltf.scene);
-				gltf.scene.position.set(0, -0.5, -1.8)
-				scene.add(gltf.scene);
+				current_obj = gltf.scene
+				current_obj.position.set(0, -0.5, -1.8)
+				current_obj.scale.set(0.3, 0.3, 0.3)
+				scene.add(current_obj);
 
 			}, undefined, function (error) {
 
@@ -76,12 +78,14 @@
 			controls = new OrbitControls(camera, renderer.domElement)
 			console.log(controls);
 			controls.enableDamping = true;
+			const arBtn = document.getElementById('ARButton')
+			
+
 		}
 
 		function onWindowResize() {
 			camera.aspect = window.innerWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
-			controls.update()
 			renderer.setSize(window.innerWidth, window.innerHeight);
 		}
 
